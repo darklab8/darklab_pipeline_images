@@ -32,7 +32,7 @@ deploying_docker_kubectl_builder:
   script:
       - docker ps
       - mkdir ~/.docker; echo "$dockerconfig_darkwind8" > ~/.docker/config.json
-      - docker build --tag $BUILDER_DOCKER_KUBECTL_DOCKER_REGISTRY:latest builder-docker-k8s
+      - docker build --tag $BUILDER_DOCKER_KUBECTL_DOCKER_REGISTRY:latest builder-docker-kubectl
       - docker push $BUILDER_DOCKER_KUBECTL_DOCKER_REGISTRY:latest
-      - docker build --tag $BUILDER_DOCKER_KUBECTL_DOCKER_REGISTRY:$BUILDER_DOCKER_KUBECTL_VERSION builder-docker-k8s
+      - docker build --tag $BUILDER_DOCKER_KUBECTL_DOCKER_REGISTRY:$BUILDER_DOCKER_KUBECTL_VERSION builder-docker-kubectl
       - docker push $BUILDER_DOCKER_KUBECTL_DOCKER_REGISTRY:$BUILDER_DOCKER_KUBECTL_VERSION
