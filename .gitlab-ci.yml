@@ -1,0 +1,21 @@
+
+variables:
+  PIPELINE_RUNNER: registry.gitlab.com/darklab2/darklab_pipeliner/darklab-pipeliner:kubectl-v1.0.3
+  PIPELINE_BUILDING: darkwind8/golang-builder
+  VERISON: v1.0.0
+
+stages:
+  - build_and_push
+
+deploying_golang_builder:
+  image: ${PIPELINE_RUNNER}
+  stage: build_and_push
+  variables:
+    DOCKER_HOST: tcp://dind-service:2375
+  script:
+      - docker ps
+      - mkdir ~/.docker; echo "$dockerconfig_darkwind8" > ~/.docker/config.json
+      - docker build --tag $PIPELINE_BUILDING:latest golang-builder
+      - docker push $PIPELINE_BUILDING:latest
+      - docker build --tag $PIPELINE_BUILDING:$VERISON golang-builder
+      - docker push $PIPELINE_BUILDING:$VERISON
