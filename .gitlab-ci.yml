@@ -1,12 +1,10 @@
 
 variables:
-  PIPELINE_RUNNER: registry.gitlab.com/darklab2/darklab_pipeliner/darklab-pipeliner:kubectl-v1.0.3
+  PIPELINE_RUNNER: darkwind8/builder-docker-kubectl:v1.0.0
   GOLANG_BUILDING: darkwind8/builder-golang
   GOLANG_VERISON: v1.0.0
   BUILDER_DOCKER_KUBECTL_DOCKER_REGISTRY: darkwind8/builder-docker-kubectl
-  BUILDER_DOCKER_KUBECTL_VERSION: v1.0.0
-
-
+  BUILDER_DOCKER_KUBECTL_VERSION: v1.0.1
 
 stages:
   - build_and_push
