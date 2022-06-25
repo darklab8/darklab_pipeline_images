@@ -25,6 +25,7 @@ deploying_docker_kubectl_builder:
   variables:
     DOCKER_HOST: tcp://dind-service:2375
   script:
+      - sleep 20
       - docker ps
       - mkdir ~/.docker; echo "$dockerconfig_darkwind8" > ~/.docker/config.json
       - docker build --tag $REPOSITORY_OF_PIPELINE_IMAGES:$BUILDER_DOCKER_KUBECTL_VERSION builder-docker-kubectl
