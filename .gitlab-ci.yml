@@ -1,6 +1,6 @@
 
 variables:
-  PIPELINE_RUNNER: darkwind8/builder-docker-kubectl:v1.0-docker-20.10.12-kubectl-v1.24.2-helm-v3.9.0
+  PIPELINE_RUNNER: v1.0-docker-20.10.12-kubectl-v1.24.2-helm-v3.9.0
   REPOSITORY_OF_PIPELINE_IMAGES: darkwind8/pipeline_images
   GOLANG_VERISON: golang-1.17.7
   BUILDER_DOCKER_KUBECTL_VERSION: v1.0-docker-20.10.12-kubectl-v1.24.2-helm-v3.9.0
@@ -9,7 +9,7 @@ stages:
   - build_and_push
 
 deploying_golang_builder:
-  image: ${PIPELINE_RUNNER}
+  image: ${REPOSITORY_OF_PIPELINE_IMAGES}:${PIPELINE_RUNNER}
   stage: build_and_push
   variables:
     DOCKER_HOST: tcp://dind-service:2375
@@ -20,7 +20,7 @@ deploying_golang_builder:
       - docker push $REPOSITORY_OF_PIPELINE_IMAGES:$GOLANG_VERISON
 
 deploying_docker_kubectl_builder:
-  image: ${PIPELINE_RUNNER}
+  image: ${REPOSITORY_OF_PIPELINE_IMAGES}:${PIPELINE_RUNNER}
   stage: build_and_push
   variables:
     DOCKER_HOST: tcp://dind-service:2375
