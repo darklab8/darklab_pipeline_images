@@ -1,10 +1,9 @@
 
 variables:
-  PIPELINE_RUNNER: darkwind8/builder-docker-kubectl:v1.0.0
-  GOLANG_BUILDING: darkwind8/builder-golang
-  GOLANG_VERISON: v1.0.0
-  BUILDER_DOCKER_KUBECTL_DOCKER_REGISTRY: darkwind8/builder-docker-kubectl
-  BUILDER_DOCKER_KUBECTL_VERSION: v1.0.1
+  PIPELINE_RUNNER: darkwind8/builder-docker-kubectl:v1.0-docker-20.10.12-kubectl-v1.24.2-helm-v3.9.0
+  REPOSITORY_OF_PIPELINE_IMAGES: darkwind8/pipeline_images
+  GOLANG_VERISON: golang-1.17.7
+  BUILDER_DOCKER_KUBECTL_VERSION: v1.0-docker-20.10.12-kubectl-v1.24.2-helm-v3.9.0
 
 stages:
   - build_and_push
@@ -17,10 +16,8 @@ deploying_golang_builder:
   script:
       - docker ps
       - mkdir ~/.docker; echo "$dockerconfig_darkwind8" > ~/.docker/config.json
-      - docker build --tag $GOLANG_BUILDING:latest builder-golang
-      - docker push $GOLANG_BUILDING:latest
-      - docker build --tag $GOLANG_BUILDING:$GOLANG_VERISON builder-golang
-      - docker push $GOLANG_BUILDING:$GOLANG_VERISON
+      - docker build --tag $REPOSITORY_OF_PIPELINE_IMAGES:$GOLANG_VERISON builder-golang
+      - docker push $REPOSITORY_OF_PIPELINE_IMAGES:$GOLANG_VERISON
 
 deploying_docker_kubectl_builder:
   image: ${PIPELINE_RUNNER}
@@ -30,7 +27,5 @@ deploying_docker_kubectl_builder:
   script:
       - docker ps
       - mkdir ~/.docker; echo "$dockerconfig_darkwind8" > ~/.docker/config.json
-      - docker build --tag $BUILDER_DOCKER_KUBECTL_DOCKER_REGISTRY:latest builder-docker-kubectl
-      - docker push $BUILDER_DOCKER_KUBECTL_DOCKER_REGISTRY:latest
-      - docker build --tag $BUILDER_DOCKER_KUBECTL_DOCKER_REGISTRY:$BUILDER_DOCKER_KUBECTL_VERSION builder-docker-kubectl
-      - docker push $BUILDER_DOCKER_KUBECTL_DOCKER_REGISTRY:$BUILDER_DOCKER_KUBECTL_VERSION
+      - docker build --tag $REPOSITORY_OF_PIPELINE_IMAGES:$BUILDER_DOCKER_KUBECTL_VERSION builder-docker-kubectl
+      - docker push $REPOSITORY_OF_PIPELINE_IMAGES:$BUILDER_DOCKER_KUBECTL_VERSION
